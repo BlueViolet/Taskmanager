@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\ProjectsRepository;
+use App\Http\Requests\CreateProjectRequest;
 
 class ProjectsController extends Controller
 {
@@ -15,7 +16,7 @@ class ProjectsController extends Controller
         $this->repo = $repo;
     }
 
-    public function store(Request $request)
+    public function store(CreateProjectRequest $request)
     {
         $this->repo->create($request);
     }
