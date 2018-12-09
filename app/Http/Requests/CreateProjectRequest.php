@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateProjectRequest extends FormRequest
 {
@@ -24,7 +25,12 @@ class CreateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:projects',
+            'name' => [
+                'required',
+                Rule::unique('projects')->where(function($query){
+                    return $query->where('user_id', request()->user()->id);
+                })
+            ],
             'thumbnail' => 'image|dimensions:min_width=260,min_height=100'
         ];
     }
