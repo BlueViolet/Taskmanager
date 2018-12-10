@@ -4,10 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
 
-class CreateProjectRequest extends FormRequest
+class UpdateProjectRequest extends FormRequest
 {
-    protected $errorBag = 'create';
+    //protected $errorBag = 'update';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,7 +29,7 @@ class CreateProjectRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('projects')->where(function($query){
+                Rule::unique('projects')->ignore($this->route('project'))->where(function($query){
                     return $query->where('user_id', request()->user()->id);
                 })
             ],
@@ -44,5 +45,11 @@ class CreateProjectRequest extends FormRequest
             'thumbnail.dimensions' => '图片最小尺寸为260X100',
             'thumbnail.max' => '图片文件大小不得超过2M'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $this->errorBag = 'update-' . $this->route('project');
+        parent::failedValidation($validator);
     }
 }

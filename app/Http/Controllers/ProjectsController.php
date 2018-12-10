@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\ProjectsRepository;
 use App\Http\Requests\CreateProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 
 class ProjectsController extends Controller
@@ -17,9 +18,27 @@ class ProjectsController extends Controller
         $this->repo = $repo;
     }
 
+    public function index()
+    {
+        $projects = $this->repo->list();
+        return view('welcome',compact('projects'));
+    }
+
     public function store(CreateProjectRequest $request)
     {
         $this->repo->create($request);
+        return back();
+    }
+
+    public function show($id)
+    {
+        $project = $this->repo->find($id);
+        return view('projects.show');
+    }
+
+    public function update(UpdateProjectRequest $request, $id)
+    {
+        $this->repo->update($request,$id);
         return back();
     }
 

@@ -27,9 +27,5 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function root()
-    {
-        $projects = request()->user()->projects()->get();
-        return view('welcome',compact('projects'));
-    }
+    
 }
