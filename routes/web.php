@@ -14,11 +14,11 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
-
-
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'ProjectsController@index');
 Route::resource('projects', 'ProjectsController');
-Route::resource('tasks', 'ProjectsController');
+Route::resource('tasks', 'TasksController');
+Route::post('tasks/{task}/check', 'TasksController@check')->name('tasks.check');
 
 
 // Route::get('/', 'ProjectsController@index');
