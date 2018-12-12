@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use App\Repositories\TasksRepository;
+use App\Http\Requests\CreateTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 
 class TasksController extends Controller
 {
@@ -40,7 +42,7 @@ class TasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTaskRequest $request)
     {
         $this->repo->create($request);
         return back();
@@ -81,9 +83,10 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTaskRequest $request, $id)
     {
-        //
+        $this->repo->update($request, $id);
+        return back();
     }
 
     /**
@@ -94,6 +97,7 @@ class TasksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repo->delete($id);
+        return back();
     }
 }

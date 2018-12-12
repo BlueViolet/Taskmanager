@@ -11,17 +11,21 @@
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="todo" 
         role="tabpanel" aria-labelledby="todo-tab">
-
-        @if(count($todos)>0)
             <table class="table table-striped">
-                @foreach($todos as $task)
-                    <tr>
-                        <td>{{ $task->name }}</td>
-                        <td>@include('tasks._checkForm')</td>
-                    </tr>
-                @endforeach
+                <tr>
+                    <td colspan="4">@include('tasks._createForm')</td>
+                </tr>
+                @if(count($todos)>0)
+                    @foreach($todos as $task)
+                        <tr>
+                            <td class="col-9 pl-5">{{ $task->name }}</td>
+                            <td class="col-1">@include('tasks._checkForm')</td>
+                            <td class="col-1">@include('tasks._editForm')</td>
+                            <td class="col-1">@include('tasks._deleteForm')</td>
+                        </tr>
+                    @endforeach
+                @endif
             </table>
-        @endif
     </div>
     <div class="tab-pane fade" id="done" 
         role="tabpanel" aria-labelledby="done-tab">

@@ -10,4 +10,5 @@
     
 </div>
 
+{!! $errors->getBag('create')->first('name','<div class="alert alert-danger">:message</div>') !!}
 {!! Form::close() !!}
