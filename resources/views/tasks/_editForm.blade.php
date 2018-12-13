@@ -23,10 +23,10 @@
             </div>
             {!! $errors->getBag('update-'.$task->id)->first('name','<div class="alert alert-danger">:message</div>') !!}
             <div class="form-group">
-                {!! Form::label('project', '所属项目：') !!}
-                {!! Form::select('project', $projects, $project->id, ['class'=>'form-control']) !!}
+                {!! Form::label('project_id', '所属项目：') !!}
+                {!! Form::select('project_id', $projects, null, ['class'=>'form-control']) !!}
             </div>
-            {!! $errors->getBag('update-'.$task->id)->first('project','<div class="alert alert-danger">:message</div>') !!}
+            {!! $errors->getBag('update-'.$task->id)->first('project_id','<div class="alert alert-danger">:message</div>') !!}
         </div>
         <div class="modal-footer">
             {!! Form::submit('编辑任务', ['class'=>'btn btn-primary']) !!}

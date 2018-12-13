@@ -14,6 +14,7 @@ class TasksController extends Controller
 
     public function __construct(TasksRepository $repo)
     {
+        $this->middleware('auth');
         $this->repo = $repo;
     }
     /**
@@ -23,7 +24,10 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
+        $todos = $this->repo->todos();
+        $dones = $this->repo->dones();
+        $projects = request()->user()->projects()->pluck('name','id');
+        return view('tasks.index', compact('todos','dones','projects'));
     }
 
     /**
