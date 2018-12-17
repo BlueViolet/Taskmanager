@@ -73,6 +73,14 @@
         </main>
     </div>
 
+    <footer class="footer">
+        <div class="container">
+            @auth
+                <div>当前共有{{ $total }}个任务，已完成{{ $doneCount }}个，未完成{{ $todoCount }}个。</div>
+            @endauth
+        </div>
+    </footer>
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
     @yield('customJS')

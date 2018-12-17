@@ -19,4 +19,9 @@ class Project extends Model
     {
         return $this->hasMany('App\Models\Task');
     }
+
+    public function getThumbnailAttribute($value)
+    {
+        return $value ? $value : 'team.jpg';
+    }
 }
