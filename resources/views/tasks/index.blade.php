@@ -26,7 +26,7 @@
                         @foreach($todos as $task)
                             <tr>
                                 <td class="col-9">
-                                        <span class="badge badge-secondary mr-3">{{ $task->updated_at->diffForHumans() }}</span>
+                                    <span class="badge badge-secondary mr-3">{{ $task->updated_at->diffForHumans() }}</span>
                                     {{ $task->name }}
                                 </td>
                                 <td class="col-1">@include('tasks._checkForm')</td>
