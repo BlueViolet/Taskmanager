@@ -14,4 +14,9 @@ class Task extends Model
     {
         return $this->belongsTo('App\Models\Project');
     }
+
+    public function steps()
+    {
+        return $this->hasMany('App\Models\Step');
+    }
 }

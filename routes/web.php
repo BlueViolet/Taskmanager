@@ -18,6 +18,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'ProjectsController@index');
 Route::resource('projects', 'ProjectsController');
 Route::resource('tasks', 'TasksController');
+Route::resource('tasks.steps', 'StepsController');
 Route::post('tasks/{task}/check', 'TasksController@check')->name('tasks.check');
 
 
