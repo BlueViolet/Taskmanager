@@ -3,7 +3,7 @@
         <div class="col-4 mr-3">
             <div class="card mb-3" v-if="inProcess.length">
                 <div class="card-header">
-                    待完成步骤(@{{ inProcess.length }})：
+                    待完成步骤({{ inProcess.length }})：
                     <button class="btn btn-sm btn-success pull-right" @click="completeAll">
                         完成所有
                     </button>
@@ -12,7 +12,7 @@
                     <ul class="list-group">
                         <li class="list-group-item" v-for="step in inProcess">
                             <span @dblclick="editStep(step)">
-                                @{{ step.name }}
+                                {{ step.name }}
                             </span>
                             <button type="button" class="btn btn-danger btn-sm pull-right" @click="removeStep(step)">
                                 <i class="fa fa-close"></i>
@@ -39,7 +39,7 @@
         <div class="col-4">
             <div class="card" v-if="processed.length">
                 <div class="card-header">
-                    已完成步骤(@{{ processed.length }})：
+                    已完成步骤({{ processed.length }})：
                     <button class="btn btn-sm btn-danger pull-right" @click="clearAll">
                         清除已完成
                     </button>
@@ -48,7 +48,7 @@
                     <ul class="list-group">
                         <li class="list-group-item" v-for="step in processed">
                             <span @dblclick="editStep(step)">
-                                @{{ step.name }}
+                                {{ step.name }}
                             </span>
                             <button type="button" class="btn btn-danger btn-sm pull-right" @click="removeStep(step)">
                                 <i class="fa fa-close"></i>
@@ -66,15 +66,19 @@
 
 <script>
     export default {
+        props:[
+            'route'
+        ],
         data(){
             return {
                 steps: [
-                    {name: 'hello world!', completion: false},
-                    {name: 'hello wyh', completion: false},
-                    {name: 'hello zj', completion: true}
+                    // {name: 'hello world!', completion: false}
                 ],
                 newStep: ''
             }
+        },
+        created(){
+            this.fetchSteps();
         },
         computed:{
             inProcess(){
@@ -89,6 +93,11 @@
             }
         },
         methods:{
+            fetchSteps(){
+                axios.get(this.route).then((res)=>{
+                    this.steps = res.data;
+                });
+            },
             addStep(){
                 this.steps.push({name: this.newStep, completion: false});
                 this.newStep = '';

@@ -47455,7 +47455,7 @@ exports = module.exports = __webpack_require__(42)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47986,11 +47986,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['route'],
     data: function data() {
         return {
-            steps: [{ name: 'hello world!', completion: false }, { name: 'hello wyh', completion: false }, { name: 'hello zj', completion: true }],
+            steps: [
+                // {name: 'hello world!', completion: false}
+            ],
             newStep: ''
         };
+    },
+    created: function created() {
+        this.fetchSteps();
     },
 
     computed: {
@@ -48006,6 +48012,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
+        fetchSteps: function fetchSteps() {
+            var _this = this;
+
+            axios.get(this.route).then(function (res) {
+                _this.steps = res.data;
+            });
+        },
         addStep: function addStep() {
             this.steps.push({ name: this.newStep, completion: false });
             this.newStep = '';
@@ -48047,7 +48060,7 @@ var render = function() {
         ? _c("div", { staticClass: "card mb-3" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v(
-                "\n                待完成步骤(@" +
+                "\n                待完成步骤(" +
                   _vm._s(_vm.inProcess.length) +
                   ")：\n                "
               ),
@@ -48078,7 +48091,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                            @" +
+                          "\n                            " +
                             _vm._s(step.name) +
                             "\n                        "
                         )
@@ -48190,7 +48203,7 @@ var render = function() {
         ? _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v(
-                "\n                已完成步骤(@" +
+                "\n                已完成步骤(" +
                   _vm._s(_vm.processed.length) +
                   ")：\n                "
               ),
@@ -48221,7 +48234,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                            @" +
+                          "\n                            " +
                             _vm._s(step.name) +
                             "\n                        "
                         )
