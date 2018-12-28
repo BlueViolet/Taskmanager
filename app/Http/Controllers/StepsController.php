@@ -15,7 +15,9 @@ class StepsController extends Controller
      */
     public function index(Task $task)
     {
-        return $task->steps()->get();
+        return response()->json([
+            'steps' => $task->steps()->get()
+        ], 200);
     }
 
     /**
@@ -34,9 +36,11 @@ class StepsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Task $task, Request $request)
     {
-        //
+        return response()->json([
+            'step' => $task->steps()->create($request->only('name'))
+        ], 201);
     }
 
     /**
@@ -45,7 +49,7 @@ class StepsController extends Controller
      * @param  \App\ModelsStep  $modelsStep
      * @return \Illuminate\Http\Response
      */
-    public function show(ModelsStep $modelsStep)
+    public function show(Step $step)
     {
         //
     }
@@ -56,7 +60,7 @@ class StepsController extends Controller
      * @param  \App\ModelsStep  $modelsStep
      * @return \Illuminate\Http\Response
      */
-    public function edit(ModelsStep $modelsStep)
+    public function edit(Step $step)
     {
         //
     }
@@ -68,7 +72,7 @@ class StepsController extends Controller
      * @param  \App\ModelsStep  $modelsStep
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ModelsStep $modelsStep)
+    public function update(Request $request, Step $step)
     {
         //
     }
@@ -79,8 +83,12 @@ class StepsController extends Controller
      * @param  \App\ModelsStep  $modelsStep
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ModelsStep $modelsStep)
+    public function destroy(Task $task, Step $step)
     {
-        //
+        $step->delete();
+
+        return response()->json([
+            'msg' => '删除成功！'
+        ], 204);
     }
 }

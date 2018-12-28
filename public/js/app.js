@@ -47455,7 +47455,7 @@ exports = module.exports = __webpack_require__(42)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48016,19 +48016,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             axios.get(this.route).then(function (res) {
-                _this.steps = res.data;
+                _this.steps = res.data.steps;
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
             });
         },
         addStep: function addStep() {
-            this.steps.push({ name: this.newStep, completion: false });
-            this.newStep = '';
+            var _this2 = this;
+
+            axios.post(this.route, { name: this.newStep }).then(function (res) {
+                _this2.steps.push(res.data.step);
+                _this2.newStep = '';
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
+            });
         },
         stepToggle: function stepToggle(step) {
             step.completion = !step.completion;
         },
         removeStep: function removeStep(step) {
-            var i = this.steps.indexOf(step);
-            this.steps.splice(i, 1);
+            var _this3 = this;
+
+            axios.delete(this.route + '/' + step.id).then(function (res) {
+                var i = _this3.steps.indexOf(step);
+                _this3.steps.splice(i, 1);
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
+            });
         },
         editStep: function editStep(step) {
             this.removeStep(step);

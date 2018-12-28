@@ -95,19 +95,29 @@
         methods:{
             fetchSteps(){
                 axios.get(this.route).then((res)=>{
-                    this.steps = res.data;
-                });
+                    this.steps = res.data.steps;
+                }).catch((err)=>{
+                    alert(`很抱歉，发生错误，\n 错误码：${err.response.status} \n 错误信息：${err.response.data.message} \n `);
+                })
             },
             addStep(){
-                this.steps.push({name: this.newStep, completion: false});
-                this.newStep = '';
+                axios.post(this.route, { name:this.newStep }).then((res)=>{
+                    this.steps.push(res.data.step);
+                    this.newStep = '';
+                }).catch((err)=>{
+                    alert(`很抱歉，发生错误，\n 错误码：${err.response.status} \n 错误信息：${err.response.data.message} \n `);
+                })
             },
             stepToggle(step){
                 step.completion = !step.completion;
             },
             removeStep(step){
-                let i = this.steps.indexOf(step);
-                this.steps.splice(i, 1);
+                axios.delete(`${this.route}/${step.id}`).then((res)=>{
+                    let i = this.steps.indexOf(step);
+                    this.steps.splice(i, 1);
+                }).catch((err)=>{
+                    alert(`很抱歉，发生错误，\n 错误码：${err.response.status} \n 错误信息：${err.response.data.message} \n `);
+                })
             },
             editStep(step){
                 this.removeStep(step);
