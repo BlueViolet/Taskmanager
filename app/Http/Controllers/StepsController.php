@@ -72,9 +72,18 @@ class StepsController extends Controller
      * @param  \App\ModelsStep  $modelsStep
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Step $step)
+    public function update(Request $request, Task $task, Step $step)
     {
-        //
+        $step->update([
+            'completion' => $request->completion
+        ]);
+    }
+
+    public function completeAll(Task $task)
+    {
+        $task->steps()->update([
+            'completion' => 1
+        ]);
     }
 
     /**
@@ -90,5 +99,10 @@ class StepsController extends Controller
         return response()->json([
             'msg' => '删除成功！'
         ], 204);
+    }
+
+    public function clearAll(Task $task)
+    {
+        $task->steps()->where('completion',1)->delete();
     }
 }

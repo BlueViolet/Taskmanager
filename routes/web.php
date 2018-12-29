@@ -18,6 +18,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'ProjectsController@index');
 Route::resource('projects', 'ProjectsController');
 Route::resource('tasks', 'TasksController');
+Route::post('tasks/{task}/steps/complete', 'StepsController@completeAll');
+Route::delete('tasks/{task}/steps/clear', 'StepsController@clearAll');
 Route::resource('tasks.steps', 'StepsController');
 Route::post('tasks/{task}/check', 'TasksController@check')->name('tasks.check');
 

@@ -109,7 +109,12 @@
                 })
             },
             stepToggle(step){
-                step.completion = !step.completion;
+                axios.patch(`${this.route}/${step.id}`, {completion: !step.completion})
+                     .then((res)=>{
+                    step.completion = !step.completion;
+                }).catch((err)=>{
+                    alert(`很抱歉，发生错误，\n 错误码：${err.response.status} \n 错误信息：${err.response.data.message} \n `);
+                });
             },
             removeStep(step){
                 axios.delete(`${this.route}/${step.id}`).then((res)=>{
@@ -125,12 +130,20 @@
                 this.$refs.newStep.focus();
             },
             completeAll(){
-                this.inProcess.forEach((step)=>{
-                    step.completion = true;
-                })
+                axios.post(`${this.route}/complete`).then((res)=>{
+                    this.inProcess.forEach((step)=>{
+                        step.completion = true;
+                    })
+                }).catch((err)=>{
+                    alert(`很抱歉，发生错误，\n 错误码：${err.response.status} \n 错误信息：${err.response.data.message} \n `);
+                });
             },
             clearAll(){
-                this.steps = this.inProcess;
+                axios.delete(`${this.route}/clear`).then((res)=>{
+                    this.steps = this.inProcess;
+                }).catch((err)=>{
+                    alert(`很抱歉，发生错误，\n 错误码：${err.response.status} \n 错误信息：${err.response.data.message} \n `);
+                });
             }
         }
     }

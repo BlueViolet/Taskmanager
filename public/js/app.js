@@ -47455,7 +47455,7 @@ exports = module.exports = __webpack_require__(42)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48032,7 +48032,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         stepToggle: function stepToggle(step) {
-            step.completion = !step.completion;
+            axios.patch(this.route + '/' + step.id, { completion: !step.completion }).then(function (res) {
+                step.completion = !step.completion;
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
+            });
         },
         removeStep: function removeStep(step) {
             var _this3 = this;
@@ -48050,12 +48054,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$refs.newStep.focus();
         },
         completeAll: function completeAll() {
-            this.inProcess.forEach(function (step) {
-                step.completion = true;
+            var _this4 = this;
+
+            axios.post(this.route + '/complete').then(function (res) {
+                _this4.inProcess.forEach(function (step) {
+                    step.completion = true;
+                });
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
             });
         },
         clearAll: function clearAll() {
-            this.steps = this.inProcess;
+            var _this5 = this;
+
+            axios.delete(this.route + '/clear').then(function (res) {
+                _this5.steps = _this5.inProcess;
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
+            });
         }
     }
 });
