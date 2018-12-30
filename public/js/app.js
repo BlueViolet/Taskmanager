@@ -47455,7 +47455,7 @@ exports = module.exports = __webpack_require__(42)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47918,40 +47918,11 @@ module.exports = function normalizeComponent (
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__step_create_vue__ = __webpack_require__(52);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__step_create_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__step_create_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__step_list_vue__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__step_list_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__step_list_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__event_bus_js__ = __webpack_require__(55);
 //
 //
 //
@@ -47985,18 +47956,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['route'],
+    props: {
+        route: String,
+        initSteps: Array
+    },
+    components: {
+        'StepCreate': __WEBPACK_IMPORTED_MODULE_0__step_create_vue___default.a,
+        'StepList': __WEBPACK_IMPORTED_MODULE_1__step_list_vue___default.a
+    },
     data: function data() {
         return {
             steps: [
                 // {name: 'hello world!', completion: false}
-            ],
-            newStep: ''
+            ]
         };
     },
     created: function created() {
-        this.fetchSteps();
+        this.steps = this.initSteps;
+        __WEBPACK_IMPORTED_MODULE_2__event_bus_js__["a" /* Hub */].$on('remove', this.removeStep);
     },
 
     computed: {
@@ -48012,52 +47994,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        fetchSteps: function fetchSteps() {
-            var _this = this;
-
-            axios.get(this.route).then(function (res) {
-                _this.steps = res.data.steps;
-            }).catch(function (err) {
-                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
-            });
-        },
-        addStep: function addStep() {
-            var _this2 = this;
-
-            axios.post(this.route, { name: this.newStep }).then(function (res) {
-                _this2.steps.push(res.data.step);
-                _this2.newStep = '';
-            }).catch(function (err) {
-                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
-            });
-        },
-        stepToggle: function stepToggle(step) {
-            axios.patch(this.route + '/' + step.id, { completion: !step.completion }).then(function (res) {
-                step.completion = !step.completion;
-            }).catch(function (err) {
-                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
-            });
+        sync: function sync(step) {
+            this.steps.push(step);
         },
         removeStep: function removeStep(step) {
-            var _this3 = this;
-
-            axios.delete(this.route + '/' + step.id).then(function (res) {
-                var i = _this3.steps.indexOf(step);
-                _this3.steps.splice(i, 1);
-            }).catch(function (err) {
-                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
-            });
-        },
-        editStep: function editStep(step) {
-            this.removeStep(step);
-            this.newStep = step.name;
-            this.$refs.newStep.focus();
+            var i = this.steps.indexOf(step);
+            this.steps.splice(i, 1);
         },
         completeAll: function completeAll() {
-            var _this4 = this;
+            var _this = this;
 
             axios.post(this.route + '/complete').then(function (res) {
-                _this4.inProcess.forEach(function (step) {
+                _this.inProcess.forEach(function (step) {
                     step.completion = true;
                 });
             }).catch(function (err) {
@@ -48065,10 +48013,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         clearAll: function clearAll() {
-            var _this5 = this;
+            var _this2 = this;
 
             axios.delete(this.route + '/clear').then(function (res) {
-                _this5.steps = _this5.inProcess;
+                _this2.steps = _this2.inProcess;
             }).catch(function (err) {
                 alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
             });
@@ -48085,227 +48033,82 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row justify-content-center" }, [
-    _c("div", { staticClass: "col-4 mr-3" }, [
-      _vm.inProcess.length
-        ? _c("div", { staticClass: "card mb-3" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v(
-                "\n                待完成步骤(" +
-                  _vm._s(_vm.inProcess.length) +
-                  ")：\n                "
-              ),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-success pull-right",
-                  on: { click: _vm.completeAll }
-                },
-                [_vm._v("\n                    完成所有\n                ")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "ul",
-                { staticClass: "list-group" },
-                _vm._l(_vm.inProcess, function(step) {
-                  return _c("li", { staticClass: "list-group-item" }, [
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          dblclick: function($event) {
-                            _vm.editStep(step)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(step.name) +
-                            "\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm pull-right",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.removeStep(step)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-close" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-success btn-sm pull-right mr-2",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.stepToggle(step)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-check" })]
-                    )
-                  ])
-                }),
-                0
-              )
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "label",
-              {
-                directives: [
+    _c(
+      "div",
+      { staticClass: "col-4 mr-3" },
+      [
+        _c(
+          "step-list",
+          { attrs: { steps: _vm.inProcess, route: _vm.route } },
+          [
+            _c("template", { slot: "card_header" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v(
+                  "\n                    待完成步骤(" +
+                    _vm._s(_vm.inProcess.length) +
+                    ")：\n                    "
+                ),
+                _c(
+                  "button",
                   {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.newStep,
-                    expression: "!newStep"
-                  }
-                ]
-              },
-              [_vm._v("要完成当前任务，需要哪些步骤？")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.newStep,
-                  expression: "newStep"
-                }
-              ],
-              ref: "newStep",
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: _vm.newStep },
-              on: {
-                keyup: function($event) {
-                  if (
-                    !("button" in $event) &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.addStep($event)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.newStep = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _vm.newStep
-            ? _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-success pill-right",
-                  on: { click: _vm.addStep }
-                },
-                [_vm._v("添加步骤")]
-              )
-            : _vm._e()
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-4" }, [
-      _vm.processed.length
-        ? _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v(
-                "\n                已完成步骤(" +
-                  _vm._s(_vm.processed.length) +
-                  ")：\n                "
-              ),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-danger pull-right",
-                  on: { click: _vm.clearAll }
-                },
-                [_vm._v("\n                    清除已完成\n                ")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c(
-                "ul",
-                { staticClass: "list-group" },
-                _vm._l(_vm.processed, function(step) {
-                  return _c("li", { staticClass: "list-group-item" }, [
-                    _c(
-                      "span",
-                      {
-                        on: {
-                          dblclick: function($event) {
-                            _vm.editStep(step)
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(step.name) +
-                            "\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-sm pull-right",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.removeStep(step)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-close" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary btn-sm pull-right mr-2",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.stepToggle(step)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-check" })]
+                    staticClass: "btn btn-sm btn-success pull-right",
+                    on: { click: _vm.completeAll }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        完成所有\n                    "
                     )
-                  ])
-                }),
-                0
-              )
+                  ]
+                )
+              ])
             ])
-          ])
-        : _vm._e()
-    ])
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("step-create", {
+          attrs: { route: _vm.route },
+          on: { add: _vm.sync }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-4" },
+      [
+        _c(
+          "step-list",
+          { attrs: { steps: _vm.processed, route: _vm.route } },
+          [
+            _c("template", { slot: "card_header" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v(
+                  "\n                    已完成步骤(" +
+                    _vm._s(_vm.processed.length) +
+                    ")：\n                    "
+                ),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-danger pull-right",
+                    on: { click: _vm.clearAll }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        清除已完成\n                    "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ],
+          2
+        )
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -48323,6 +48126,398 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(45)
+/* script */
+var __vue_script__ = __webpack_require__(53)
+/* template */
+var __vue_template__ = __webpack_require__(54)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/step-create.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5d5b18bc", Component.options)
+  } else {
+    hotAPI.reload("data-v-5d5b18bc", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 53 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_bus_js__ = __webpack_require__(55);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        route: String
+    },
+    data: function data() {
+        return {
+            newStep: ''
+        };
+    },
+    created: function created() {
+        __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* Hub */].$on('edit', this.editStep);
+    },
+
+    methods: {
+        addStep: function addStep() {
+            var _this = this;
+
+            axios.post(this.route, { name: this.newStep }).then(function (res) {
+                _this.$emit('add', res.data.step);
+                _this.newStep = '';
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
+            });
+        },
+        editStep: function editStep(step) {
+            this.newStep = step.name;
+            this.$refs.newStep.focus();
+        }
+    }
+});
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "label",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.newStep,
+                expression: "!newStep"
+              }
+            ]
+          },
+          [_vm._v("要完成当前任务，需要哪些步骤？")]
+        ),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.newStep,
+              expression: "newStep"
+            }
+          ],
+          ref: "newStep",
+          staticClass: "form-control",
+          attrs: { type: "text" },
+          domProps: { value: _vm.newStep },
+          on: {
+            keyup: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.addStep($event)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.newStep = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _vm.newStep
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-success pill-right",
+              on: { click: _vm.addStep }
+            },
+            [_vm._v("添加步骤")]
+          )
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5d5b18bc", module.exports)
+  }
+}
+
+/***/ }),
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Hub; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+
+
+var Hub = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(45)
+/* script */
+var __vue_script__ = __webpack_require__(57)
+/* template */
+var __vue_template__ = __webpack_require__(58)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/step-list.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-c3e1e478", Component.options)
+  } else {
+    hotAPI.reload("data-v-c3e1e478", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__event_bus_js__ = __webpack_require__(55);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: {
+        steps: Array,
+        route: String
+    },
+    data: function data() {
+        return {};
+    },
+
+    methods: {
+        stepToggle: function stepToggle(step) {
+            axios.patch(this.route + '/' + step.id, { completion: !step.completion }).then(function (res) {
+                step.completion = !step.completion;
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
+            });
+        },
+        removeStep: function removeStep(step) {
+            axios.delete(this.route + '/' + step.id).then(function (res) {
+                __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* Hub */].$emit('remove', step);
+            }).catch(function (err) {
+                alert('\u5F88\u62B1\u6B49\uFF0C\u53D1\u751F\u9519\u8BEF\uFF0C\n \u9519\u8BEF\u7801\uFF1A' + err.response.status + ' \n \u9519\u8BEF\u4FE1\u606F\uFF1A' + err.response.data.message + ' \n ');
+            });
+        },
+        editStep: function editStep(step) {
+            this.removeStep(step);
+            __WEBPACK_IMPORTED_MODULE_0__event_bus_js__["a" /* Hub */].$emit('edit', step);
+        }
+    }
+});
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.steps.length
+    ? _c(
+        "div",
+        { staticClass: "card mb-3" },
+        [
+          _vm._t("card_header"),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "ul",
+              { staticClass: "list-group" },
+              _vm._l(_vm.steps, function(step) {
+                return _c("li", { staticClass: "list-group-item" }, [
+                  _c(
+                    "span",
+                    {
+                      on: {
+                        dblclick: function($event) {
+                          _vm.editStep(step)
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(step.name) +
+                          "\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger btn-sm pull-right",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.removeStep(step)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-close" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success btn-sm pull-right mr-2",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.stepToggle(step)
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-check" })]
+                  )
+                ])
+              }),
+              0
+            )
+          ])
+        ],
+        2
+      )
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-c3e1e478", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
